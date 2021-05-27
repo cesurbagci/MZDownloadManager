@@ -40,7 +40,7 @@ open class MZDownloadModel: NSObject {
     
     open var speed: (speed: Float, unit: String)?
     
-    var callback: ((Float) -> ())?
+    open var callback: ((Float) -> ())?
     
     open var progress: Float = 0 {
         didSet {
