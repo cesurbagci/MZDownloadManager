@@ -336,7 +336,7 @@ extension MZDownloadManager: URLSessionDownloadDelegate {
 
 extension MZDownloadManager {
     
-    @objc public func addDownloadTask(_ fileName: String, request: URLRequest, destinationPath: String) {
+    @objc public func addDownloadTask(_ fileName: String, request: URLRequest, destinationPath: String, progress: @escaping (Float) -> ()) {
         
         let url = request.url!
         let fileURL = url.absoluteString
@@ -351,25 +351,26 @@ extension MZDownloadManager {
         downloadModel.startTime = Date()
         downloadModel.status = TaskStatus.downloading.description()
         downloadModel.task = downloadTask
+        downloadModel.callback = progress
         
         downloadingArray.append(downloadModel)
         delegate?.downloadRequestStarted?(downloadModel, index: downloadingArray.count - 1)
     }
     
-    @objc public func addDownloadTask(_ fileName: String, fileURL: String, destinationPath: String) {
+    @objc public func addDownloadTask(_ fileName: String, fileURL: String, destinationPath: String, progress: @escaping (Float) -> ()) {
         
         let url = URL(string: fileURL)!
         let request = URLRequest(url: url)
-        addDownloadTask(fileName, request: request, destinationPath: destinationPath)
+        addDownloadTask(fileName, request: request, destinationPath: destinationPath, progress: progress)
         
     }
     
-    @objc public func addDownloadTask(_ fileName: String, fileURL: String) {
-        addDownloadTask(fileName, fileURL: fileURL, destinationPath: "")
+    @objc public func addDownloadTask(_ fileName: String, fileURL: String, progress: @escaping (Float) -> ()) {
+        addDownloadTask(fileName, fileURL: fileURL, destinationPath: "", progress: progress)
     }
     
-    @objc public func addDownloadTask(_ fileName: String, request: URLRequest) {
-        addDownloadTask(fileName, request: request, destinationPath: "")
+    @objc public func addDownloadTask(_ fileName: String, request: URLRequest, progress: @escaping (Float) -> ()) {
+        addDownloadTask(fileName, request: request, destinationPath: "", progress: progress)
     }
     
     @objc public func pauseDownloadTaskAtIndex(_ index: Int) {
