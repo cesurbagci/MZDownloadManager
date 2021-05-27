@@ -76,7 +76,7 @@ open class MZDownloadManager: NSObject {
     
     open var downloadingArray: [MZDownloadModel] = []
     
-    public convenience init(session sessionIdentifer: String, delegate: MZDownloadManagerDelegate, sessionConfiguration: URLSessionConfiguration? = nil, completion: (() -> Void)? = nil) {
+    public convenience init(session sessionIdentifer: String, delegate: MZDownloadManagerDelegate? = nil, sessionConfiguration: URLSessionConfiguration? = nil, completion: (() -> Void)? = nil) {
         self.init()
         self.delegate = delegate
         self.sessionManager = backgroundSession(identifier: sessionIdentifer, configuration: sessionConfiguration)
